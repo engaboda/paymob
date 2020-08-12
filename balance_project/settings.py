@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'balance',
+    'balance.apps.BalanceConfig',
     'rest_framework',
+    'modeltranslation',
 ]
 
 MIDDLEWARE = [
@@ -145,7 +146,6 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'default',
         },
-        ,
         'logging.handlers.SysLogHandler': {
             'level': 'DEBUG',
             'class': 'logging.handlers.SysLogHandler',

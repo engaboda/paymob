@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from model_utils.models import TimeStampedModel
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.dispatch import receiver
+from googletrans import Translator
+
 
 CATEGORIES = [
     ('A', 'A Class'),
@@ -35,6 +38,14 @@ class PromoCode(TimeStampedModel):
     @property
     def is_expired(self):
         return (timezone.now().date() >= self.end_date)
+
+    def save(self, *args, **kwargs):
+        self.is_active = self.is_expired
+        translator = Translator()
+        translation = translator.translate([self.code, self.title], 'ar')
+        self.code_ar = translation[0].text
+        self.title_ar = translation[1].text
+        super().save(*args, **kwargs)
 
 
 class PromoHistory(TimeStampedModel):

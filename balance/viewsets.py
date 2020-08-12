@@ -38,7 +38,7 @@ def redeem(request):
         activate(cur_language)
         return Response({'statu': _('Done')})
 
-    if promo_code.frequency_of_use <= freq_of_use:
+    if promo_code.frequency_of_use == freq_of_use:
         logger.info("[{}] this user try to use promo_code while he exceed his usage: {}".format(request.user, freq_of_use))
     elif products.count() != promo_code.quantity:
         logger.info("[{}] this user try to use promo_code with less than configured quantity".format(request.user))
